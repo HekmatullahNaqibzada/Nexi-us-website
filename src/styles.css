@@ -1,0 +1,499 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* NEXI brand: deep dark + teal */
+  --background: oklch(0.13 0.012 240);
+  --foreground: oklch(0.98 0.003 240);
+  --surface: oklch(0.16 0.012 240);
+  --surface-2: oklch(0.20 0.012 240);
+  --line: oklch(1 0 0 / 8%);
+  --muted: oklch(0.22 0.012 240);
+  --muted-foreground: oklch(0.72 0.012 240);
+
+  --card: oklch(0.16 0.012 240);
+  --card-foreground: oklch(0.98 0.003 240);
+
+  --primary: oklch(0.78 0.13 195);
+  --primary-foreground: oklch(0.12 0.012 240);
+  --primary-glow: oklch(0.85 0.14 190);
+
+  --accent: oklch(0.78 0.13 195);
+  --accent-foreground: oklch(0.12 0.012 240);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.78 0.13 195);
+
+  --gradient-primary: linear-gradient(135deg, oklch(0.78 0.13 195), oklch(0.85 0.14 190));
+  --gradient-radial: radial-gradient(ellipse at top, oklch(0.78 0.13 195 / 0.18), transparent 60%);
+  --gradient-ambient-left: radial-gradient(ellipse at 0% 40%, oklch(0.78 0.13 195 / 0.15), transparent 55%);
+  --gradient-ambient-right: radial-gradient(ellipse at 100% 60%, oklch(0.55 0.16 255 / 0.18), transparent 55%);
+  --gradient-ambient-bottom: radial-gradient(ellipse at 50% 100%, oklch(0.78 0.13 195 / 0.12), transparent 55%);
+  --shadow-glow: 0 20px 60px -20px oklch(0.78 0.13 195 / 0.55);
+  --shadow-elevated: 0 30px 80px -30px oklch(0 0 0 / 0.7);
+  --shadow-card: 0 4px 24px -8px oklch(0 0 0 / 0.35);
+}
+
+.dark {
+  --background: oklch(0.15 0.012 240);
+  --foreground: oklch(0.98 0.003 240);
+  --surface: oklch(0.18 0.014 240);
+  --surface-2: oklch(0.22 0.016 240);
+  --line: oklch(1 0 0 / 10%);
+  --muted: oklch(0.26 0.016 240);
+  --muted-foreground: oklch(0.70 0.012 240);
+
+  --card: oklch(0.18 0.014 240);
+  --card-foreground: oklch(0.98 0.003 240);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+
+  --gradient-radial: radial-gradient(ellipse at top, oklch(0.78 0.13 195 / 0.22), transparent 55%);
+  --gradient-ambient-left: radial-gradient(ellipse at 0% 45%, oklch(0.78 0.13 195 / 0.18), transparent 50%);
+  --gradient-ambient-right: radial-gradient(ellipse at 100% 55%, oklch(0.55 0.18 255 / 0.22), transparent 50%);
+  --gradient-ambient-bottom: radial-gradient(ellipse at 50% 100%, oklch(0.78 0.13 195 / 0.16), transparent 50%);
+  --shadow-elevated: 0 30px 80px -30px oklch(0 0 0 / 0.75);
+  --shadow-card: 0 4px 28px -6px oklch(0 0 0 / 0.45);
+  --grid-line: oklch(1 0 0 / 0.05);
+}
+
+.light {
+  --background: oklch(0.97 0.005 240);
+  --foreground: oklch(0.16 0.012 240);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.96 0.005 240);
+  --line: oklch(0 0 0 / 10%);
+  --muted: oklch(0.94 0.006 240);
+  --muted-foreground: oklch(0.46 0.012 240);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.012 240);
+
+  --primary: oklch(0.62 0.13 195);
+  --primary-foreground: oklch(0.99 0.003 240);
+  --primary-glow: oklch(0.72 0.14 190);
+
+  --accent: oklch(0.62 0.13 195);
+  --accent-foreground: oklch(0.99 0.003 240);
+
+  --border: oklch(0 0 0 / 9%);
+  --input: oklch(0 0 0 / 10%);
+  --ring: oklch(0.62 0.13 195);
+
+  --gradient-radial: radial-gradient(ellipse at top, oklch(0.62 0.13 195 / 0.16), transparent 55%);
+  --gradient-ambient-left: radial-gradient(ellipse at 0% 45%, oklch(0.62 0.13 195 / 0.10), transparent 55%);
+  --gradient-ambient-right: radial-gradient(ellipse at 100% 55%, oklch(0.55 0.16 255 / 0.13), transparent 55%);
+  --gradient-ambient-bottom: radial-gradient(ellipse at 50% 100%, oklch(0.62 0.13 195 / 0.08), transparent 55%);
+  --shadow-glow: 0 20px 60px -20px oklch(0.62 0.13 195 / 0.40);
+  --shadow-elevated: 0 25px 60px -20px oklch(0 0 0 / 0.18), 0 8px 20px -8px oklch(0 0 0 / 0.08);
+  --shadow-card: 0 4px 20px -6px oklch(0 0 0 / 0.12), 0 2px 6px -2px oklch(0 0 0 / 0.06);
+
+  --grid-line: oklch(0 0 0 / 0.05);
+}
+
+/* ─── B Mitra — Persian / Pashto display font ────────────────────────────── */
+/* Source: src/assets/fonts/BMITRA (regular) + BMITRABD (bold)               */
+@font-face {
+  font-family: "B Mitra";
+  src: url('./assets/fonts/BMITRA.woff2') format('woff2'),
+       url('./assets/fonts/BMITRA.woff')  format('woff'),
+       url('./assets/fonts/BMITRA.otf')   format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: "B Mitra";
+  src: url('./assets/fonts/BMITRABD.woff2') format('woff2'),
+       url('./assets/fonts/BMITRABD.woff')  format('woff'),
+       url('./assets/fonts/BMITRABD.otf')   format('opentype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  /* ── Persian / Pashto typography ───────────────────────────────────────── */
+  /* Body text: Vazirmatn (readable text font)                              */
+  /* Headings:  B Mitra (display font), Vazirmatn fallback                  */
+  /* !important is required to override Tailwind arbitrary values like       */
+  /* text-[clamp(2.4rem,6vw,5rem)] which generate inline-level specificity  */
+  /* ─────────────────────────────────────────────────────────────────────── */
+
+  html[lang="fa"] body,  html[lang="ps"] body,
+  html[lang="fa"] p,     html[lang="ps"] p,
+  html[lang="fa"] span,  html[lang="ps"] span,
+  html[lang="fa"] a,     html[lang="ps"] a,
+  html[lang="fa"] li,    html[lang="ps"] li,
+  html[lang="fa"] button, html[lang="ps"] button,
+  html[lang="fa"] input,  html[lang="ps"] input,
+  html[lang="fa"] textarea, html[lang="ps"] textarea,
+  html[lang="fa"] select, html[lang="ps"] select,
+  html[lang="fa"] label,  html[lang="ps"] label,
+  html[lang="fa"] td,     html[lang="ps"] td,
+  html[lang="fa"] th,     html[lang="ps"] th,
+  html[lang="fa"] div,    html[lang="ps"] div {
+    font-family: "Vazirmatn", "Tahoma", "Arial Unicode MS", ui-sans-serif, sans-serif !important;
+    letter-spacing: 0 !important;
+    line-height: 1.75;
+  }
+
+  html[lang="fa"] h1, html[lang="ps"] h1,
+  html[lang="fa"] h2, html[lang="ps"] h2,
+  html[lang="fa"] h3, html[lang="ps"] h3,
+  html[lang="fa"] h4, html[lang="ps"] h4,
+  html[lang="fa"] h5, html[lang="ps"] h5,
+  html[lang="fa"] h6, html[lang="ps"] h6 {
+    font-family: "B Mitra", "Vazirmatn", "Tahoma", "Arial Unicode MS", ui-sans-serif, sans-serif !important;
+    line-height: 1.4 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+  }
+
+  html[lang="fa"] h1, html[lang="ps"] h1 {
+    font-size: clamp(1.5rem, 3.8vw, 2.5rem) !important;
+  }
+  html[lang="fa"] h2, html[lang="ps"] h2 {
+    font-size: clamp(1.3rem, 3vw, 2rem) !important;
+  }
+  html[lang="fa"] h3, html[lang="ps"] h3 {
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem) !important;
+  }
+  html[lang="fa"] h4, html[lang="ps"] h4 {
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem) !important;
+  }
+  html[lang="fa"] h5, html[lang="ps"] h5,
+  html[lang="fa"] h6, html[lang="ps"] h6 {
+    font-size: 0.9rem !important;
+  }
+
+  html[lang="fa"] .font-display, html[lang="ps"] .font-display {
+    font-family: "B Mitra", "Vazirmatn", "Tahoma", "Arial Unicode MS", ui-sans-serif, sans-serif !important;
+    letter-spacing: 0 !important;
+    font-size: clamp(1.3rem, 3vw, 2rem) !important;
+    line-height: 1.35 !important;
+  }
+  html[lang="fa"] .footer-surface h2.font-display,
+  html[lang="ps"] .footer-surface h2.font-display {
+    font-size: clamp(1.8rem, 5vw, 3.2rem) !important;
+    line-height: 1.1 !important;
+  }
+  html[lang="fa"] .font-display.footer-giant-text,
+  html[lang="ps"] .font-display.footer-giant-text,
+  html[lang="fa"] .font-display.footer-brand,
+  html[lang="ps"] .font-display.footer-brand {
+    font-size: clamp(5rem, 18vw, 16rem) !important;
+    line-height: 0.85 !important;
+  }
+
+  html[lang="fa"] .text-xs,  html[lang="ps"] .text-xs  { font-size: 0.7rem  !important; line-height: 1.5 !important; }
+  html[lang="fa"] .text-sm,  html[lang="ps"] .text-sm  { font-size: 0.8rem  !important; line-height: 1.6 !important; }
+  html[lang="fa"] .text-base, html[lang="ps"] .text-base { font-size: 0.9rem !important; line-height: 1.75 !important; }
+  html[lang="fa"] .text-lg,  html[lang="ps"] .text-lg  { font-size: 0.95rem !important; line-height: 1.7 !important; }
+  html[lang="fa"] .text-xl,  html[lang="ps"] .text-xl  { font-size: 1.05rem !important; line-height: 1.6 !important; }
+  html[lang="fa"] .text-2xl, html[lang="ps"] .text-2xl { font-size: 1.15rem !important; line-height: 1.45 !important; }
+  html[lang="fa"] .text-3xl, html[lang="ps"] .text-3xl { font-size: 1.3rem  !important; line-height: 1.4 !important; }
+  html[lang="fa"] .text-4xl, html[lang="ps"] .text-4xl { font-size: clamp(1.25rem, 2.8vw, 1.6rem) !important; line-height: 1.35 !important; }
+  html[lang="fa"] .text-5xl, html[lang="ps"] .text-5xl { font-size: clamp(1.4rem, 3.2vw, 1.85rem) !important; line-height: 1.3 !important; }
+  ::selection { background: oklch(0.78 0.13 195 / 0.35); color: white; }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 80rem;
+  @media (min-width: 768px) { padding-inline: 2rem; }
+}
+
+@utility text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--line);
+}
+
+@utility hairline {
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  height: 1px;
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid-line, oklch(1 0 0 / 0.04)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line, oklch(1 0 0 / 0.04)) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-14px) }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8 }
+  100% { transform: scale(1.6); opacity: 0 }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0 }
+  100% { background-position: 200% 0 }
+}
+@keyframes dash-move { to { stroke-dashoffset: -40 } }
+@keyframes signal-pulse {
+  0% { r: 2; opacity: 1 }
+  100% { r: 14; opacity: 0 }
+}
+@keyframes float-parallax {
+  0%, 100% { transform: perspective(1200px) rotateX(4deg) rotateY(-8deg) translateY(0px) }
+  50% { transform: perspective(1200px) rotateX(-2deg) rotateY(4deg) translateY(-15px) }
+}
+@keyframes float-parallax-delayed {
+  0%, 100% { transform: perspective(1200px) rotateX(-4deg) rotateY(8deg) translateY(0px) }
+  50% { transform: perspective(1200px) rotateX(2deg) rotateY(-4deg) translateY(15px) }
+}
+.data-flow { stroke-dasharray: 4 16; animation: dash-move 3s linear infinite }
+.animate-parallax { animation: float-parallax 8s ease-in-out infinite }
+.animate-parallax-delayed { animation: float-parallax-delayed 10s ease-in-out infinite }
+
+/* Ambient glow layers */
+.ambient-glow {
+  position: relative;
+  isolation: isolate;
+}
+.ambient-glow::before,
+.ambient-glow::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  inset: 0;
+}
+.ambient-glow::before {
+  background:
+    var(--gradient-ambient-left),
+    var(--gradient-ambient-right);
+}
+.ambient-glow::after {
+  background: var(--gradient-ambient-bottom);
+  opacity: 0.8;
+}
+
+/* ── Section rhythm & separation ──────────────────────────────────────── */
+
+/* Alternate surface — subtle background shift to distinguish adjacent sections */
+.section-alt {
+  background: color-mix(in oklab, var(--color-surface) 55%, transparent);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent 5%, var(--color-border) 30%, var(--color-border) 70%, transparent 95%) 1;
+}
+.light .section-alt {
+  background: oklch(0.97 0.003 240);
+}
+
+/* Accent-tinted section — uses primary color as very subtle wash */
+.section-accent {
+  background:
+    linear-gradient(180deg, oklch(0.78 0.13 195 / 0.04) 0%, transparent 50%),
+    color-mix(in oklab, var(--color-surface) 40%, transparent);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent 5%, oklch(0.78 0.13 195 / 0.12) 30%, oklch(0.78 0.13 195 / 0.12) 70%, transparent 95%) 1;
+}
+.light .section-accent {
+  background:
+    linear-gradient(180deg, oklch(0.62 0.13 195 / 0.05) 0%, transparent 50%),
+    oklch(0.965 0.006 195);
+  border-image: linear-gradient(90deg, transparent 5%, oklch(0.62 0.13 195 / 0.10) 30%, oklch(0.62 0.13 195 / 0.10) 70%, transparent 95%) 1;
+}
+
+
+/* Section depth */
+.section-surface {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid var(--color-border);
+}
+
+/* Elevation card (light: shadow, dark: subtle glow border) */
+.elevated-card {
+  position: relative;
+  background: color-mix(in oklab, var(--color-surface) 98%, transparent);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Corner glow — top-right radial bloom */
+.elevated-card::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, oklch(0.78 0.13 195 / 0.28), transparent 70%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.elevated-card:hover::before {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Wide ambient gradient wash from top-right */
+.elevated-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70%;
+  height: 75%;
+  max-width: 380px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 90% 8%, oklch(0.78 0.13 195 / 0.18), transparent 68%);
+  opacity: 0.75;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+}
+.elevated-card:hover::after {
+  opacity: 1;
+}
+.elevated-card:hover {
+  box-shadow: var(--shadow-elevated);
+  border-color: oklch(0.78 0.13 195 / 0.22);
+}
+.dark .elevated-card {
+  box-shadow: var(--shadow-card), 0 0 0 1px oklch(1 0 0 / 0.03) inset;
+}
+.dark .elevated-card::before {
+  background: radial-gradient(circle at 60% 40%, oklch(0.78 0.13 195 / 0.35), transparent 70%);
+}
+.dark .elevated-card::after {
+  background: radial-gradient(ellipse at 90% 8%, oklch(0.78 0.13 195 / 0.22), transparent 68%);
+}
+.light .elevated-card {
+  box-shadow: var(--shadow-card), 0 1px 0 oklch(1 0 0 / 0.6) inset;
+}
+.light .elevated-card::before {
+  background: radial-gradient(circle at 60% 40%, oklch(0.62 0.13 195 / 0.22), transparent 70%);
+}
+.light .elevated-card::after {
+  background: radial-gradient(ellipse at 90% 8%, oklch(0.62 0.13 195 / 0.13), transparent 68%);
+}
+
+/* Button elevation */
+.btn-elevated {
+  box-shadow: 0 4px 14px -4px oklch(0.78 0.13 195 / 0.45), 0 2px 6px -2px oklch(0 0 0 / 0.12);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.btn-elevated:hover {
+  box-shadow: 0 8px 24px -6px oklch(0.78 0.13 195 / 0.55), 0 4px 10px -4px oklch(0 0 0 / 0.15);
+  transform: translateY(-1px);
+}
+.btn-elevated:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px -2px oklch(0.78 0.13 195 / 0.35);
+}
+
+/* Line clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer separation */
+.footer-surface {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -20px 60px -30px oklch(0 0 0 / 0.1);
+}
+.dark .footer-surface {
+  box-shadow: 0 -20px 60px -30px oklch(0 0 0 / 0.25);
+}
+
+/* Subtle gradient text stroke for footer giant type */
+.light .footer-giant-text {
+  -webkit-text-stroke: 1.5px oklch(0.62 0.13 195 / 0.25);
+  background: linear-gradient(180deg, oklch(0.52 0.13 195 / 0.55), oklch(0.62 0.13 195 / 0.25));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .footer-giant-text {
+  -webkit-text-stroke: 1px oklch(1 0 0 / 0.08);
+  background: linear-gradient(180deg, oklch(0.78 0.13 195 / 0.25), oklch(1 0 0 / 0.04));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
