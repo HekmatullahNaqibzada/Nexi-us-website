@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { PageHero } from "@/components/site/PageHero";
-import { Mail, Phone, MapPin, ArrowRight, Check, CalendarCheck } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Check, CalendarCheck, Loader2 } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { useI18n } from "@/lib/i18n";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ContactPage() {
   const { t } = useI18n();
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
 
   useEffect(() => {
@@ -94,19 +98,17 @@ export default function ContactPage() {
             </div>
 
             {/* CTA button */}
-            <motion.a
-              href="https://nexi-us.setmore.com/social"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2.5 rounded-full bg-primary text-primary-foreground px-8 py-3.5 text-sm font-semibold shadow-[0_8px_28px_-6px_oklch(0.78_0.13_195/0.55)] hover:brightness-110 transition-all duration-200"
-            >
-              <CalendarCheck className="w-4 h-4" />
-              {t("contact.visitCta")}
-              <ArrowRight className="w-4 h-4" />
-            </motion.a>
-            <div className="text-[10px] text-muted-foreground mt-3 uppercase tracking-[0.18em]">via setmore · free · no credit card</div>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                to="/book-appointment"
+                className="inline-flex items-center gap-2.5 rounded-full bg-primary text-primary-foreground px-8 py-3.5 text-sm font-semibold shadow-[0_8px_28px_-6px_oklch(0.78_0.13_195/0.55)] hover:brightness-110 transition-all duration-200"
+              >
+                <CalendarCheck className="w-4 h-4" />
+                {t("contact.visitCta")}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+            <div className="text-[10px] text-muted-foreground mt-3 uppercase tracking-[0.18em]">free · no credit card required</div>
           </motion.div>
         }
       />
@@ -155,7 +157,20 @@ export default function ContactPage() {
           <div className="lg:col-span-7">
             <Reveal>
               <form
-                onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setSubmitting(true);
+                  setSubmitError(null);
+                  const { error } = await supabase.from("contacts").insert({
+                    name: form.name,
+                    email: form.email,
+                    company: form.company || null,
+                    message: form.message || null,
+                  });
+                  setSubmitting(false);
+                  if (error) { setSubmitError(error.message); return; }
+                  setSent(true);
+                }}
                 className="elevated-card rounded-3xl p-6 md:p-10 space-y-5"
               >
                 {sent ? (
@@ -179,9 +194,10 @@ export default function ContactPage() {
                         className="mt-3 w-full rounded-2xl border border-foreground/10 bg-foreground/[0.02] px-4 py-3 text-sm outline-none focus:border-primary/60 transition resize-none"
                       />
                     </div>
+                    {submitError && <p className="text-sm text-red-400">{submitError}</p>}
                     <div className="pt-2">
-                      <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:brightness-110 transition">
-                        {t("contact.form.send")} <ArrowRight className="w-4 h-4" />
+                      <button type="submit" disabled={submitting} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:brightness-110 transition disabled:opacity-50">
+                        {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <>{t("contact.form.send")} <ArrowRight className="w-4 h-4" /></>}
                       </button>
                     </div>
                   </>

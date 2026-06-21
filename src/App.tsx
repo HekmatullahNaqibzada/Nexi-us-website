@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { ThemeProvider } from "@/lib/theme";
 import { I18nProvider } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
@@ -20,9 +21,22 @@ import AdminPage from "@/pages/AdminPage";
 import AuthPage from "@/pages/AuthPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
+function RecoveryRedirect() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const hash = window.location.hash;
+    if ((hash.includes("type=recovery") || hash.includes("type=email")) && pathname !== "/auth") {
+      navigate("/auth" + hash, { replace: true });
+    }
+  }, []);
+  return null;
+}
+
 function Layout() {
   return (
     <>
+      <RecoveryRedirect />
       <ScrollReset />
       <PageLoader />
       <RouteLoader />

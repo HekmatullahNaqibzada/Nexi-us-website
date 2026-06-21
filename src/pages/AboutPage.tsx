@@ -26,9 +26,9 @@ import { HighlightText } from "@/components/site/HighlightText";
 import { useTheme } from "@/lib/theme";
 import darkLogo from "@/assets/nexi-logo-dark.png";
 import whiteLogo from "@/assets/nexi-logo-whiite.png";
-import teamPhoto1 from "@/assets/team/Abdul Ghafoor Sahel.png";
-import teamPhoto2 from "@/assets/team/ahmad Safi.png";
-import teamPhoto3 from "@/assets/team/jawad Moradi​.webp";
+import teamPhoto1 from "@/assets/team/Abdul-Ghafoor-Sahel.png";
+import teamPhoto2 from "@/assets/team/ahmad-Safi.png";
+import teamPhoto3 from "@/assets/team/jawad-moradi.webp";
 
 const YT_ID = "5YWqbjypNn4";
 

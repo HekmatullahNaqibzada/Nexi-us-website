@@ -217,7 +217,7 @@ const en: Dict = {
   "book.bookedTitle": "You're booked.",
   "book.bookedSubA": "We received your request for",
   "book.bookedSubB": "on",
-  "book.bookedSubC": "A confirmation is on its way to",
+  "book.bookedSubC": "We'll be in touch at",
 
   // Quote
   "quote.eyebrow": "Get a quote",
@@ -459,7 +459,7 @@ const fa: Dict = {
   "book.bookedTitle": "رزرو شما ثبت شد.",
   "book.bookedSubA": "درخواست شما برای",
   "book.bookedSubB": "در تاریخ",
-  "book.bookedSubC": "دریافت شد. تأییدیه به این ایمیل ارسال می‌شود:",
+  "book.bookedSubC": "دریافت شد. به زودی با شما تماس خواهیم گرفت:",
 
   "quote.eyebrow": "دریافت پیشنهاد",
   "quote.title1": "از پروژه خود به ما بگویید:",
@@ -699,7 +699,7 @@ const ps: Dict = {
   "book.bookedTitle": "ستاسو رزرو ثبت شو.",
   "book.bookedSubA": "ستاسو غوښتنه د",
   "book.bookedSubB": "په نېټه",
-  "book.bookedSubC": "ترلاسه شوه. تاییدیه به دې پته ته راشي:",
+  "book.bookedSubC": "ترلاسه شوه. ډیر ژر به ستاسو سره اړیکه ونیسو:",
 
   "quote.eyebrow": "د بیې اخیستل",
   "quote.title1": "زموږ ته د خپل پروژې په اړه ووایاست:",
