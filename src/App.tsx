@@ -7,6 +7,7 @@ import { Footer } from "@/components/site/Footer";
 import { CursorGlow } from "@/components/site/CursorGlow";
 import { PageTransition } from "@/components/site/PageTransition";
 import { FloatingSocial } from "@/components/site/FloatingSocial";
+import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { PageLoader } from "@/components/site/PageLoader";
 import { RouteLoader } from "@/components/site/RouteLoader";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
@@ -47,6 +48,7 @@ function Layout() {
       </PageTransition>
       <Footer />
       <FloatingSocial />
+      <FloatingWhatsApp />
       <ScrollToTop />
     </>
   );

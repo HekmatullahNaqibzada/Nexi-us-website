@@ -83,6 +83,48 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          company: string | null
+          website: string | null
+          service: string
+          budget: string
+          timeline: string
+          notes: string | null
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          company?: string | null
+          website?: string | null
+          service: string
+          budget: string
+          timeline?: string
+          notes?: string | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          company?: string | null
+          website?: string | null
+          service?: string
+          budget?: string
+          timeline?: string
+          notes?: string | null
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

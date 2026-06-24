@@ -1,5 +1,6 @@
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
+import { motion } from "framer-motion";
 import darkLogo from "@/assets/nexi-logo-dark.png";
 import whiteLogo from "@/assets/nexi-logo-whiite.png";
 
@@ -115,8 +116,28 @@ export function HeroVisual() {
 
         {/* Logo centered */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <img src={logoSrc} alt="NEXI-US" draggable={false}
-            className="h-20 md:h-24 w-auto object-contain drop-shadow-lg" />
+          {/* Soft radial glow behind the logo circle */}
+          <div
+            className="absolute w-40 h-40 md:w-48 md:h-48 rounded-full"
+            style={{ background: "radial-gradient(circle, oklch(0.78 0.13 195 / 0.25) 0%, transparent 70%)", filter: "blur(24px)" }}
+          />
+          {/* Animated highlight ring */}
+          <motion.div
+            className="absolute w-40 h-40 md:w-48 md:h-48 rounded-full border-2 border-primary/30"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div
+            className="relative flex items-center justify-center w-40 h-40 md:w-48 md:h-48 rounded-full elevated-card"
+            style={{
+              boxShadow: isDark
+                ? "0 0 0 8px rgba(14,188,189,0.12), 0 0 80px -5px rgba(14,188,189,0.7), 0 24px 60px -16px rgba(0,0,0,0.5)"
+                : "0 0 0 8px rgba(5,140,145,0.10), 0 0 80px -5px rgba(5,140,145,0.55), 0 24px 60px -16px rgba(0,0,0,0.25)",
+            }}
+          >
+            <img src={logoSrc} alt="NEXI-US" draggable={false}
+              className="relative z-10 h-20 md:h-24 w-auto object-contain" />
+          </div>
         </div>
 
       </div>

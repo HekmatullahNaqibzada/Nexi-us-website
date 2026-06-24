@@ -20,6 +20,16 @@ import {
   Check,
   ArrowRight,
   User,
+  FileText,
+  Stamp,
+  ClipboardList,
+  Globe,
+  HeartHandshake,
+  Home,
+  Briefcase,
+  Wifi,
+  Settings,
+  Car,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { HighlightText } from "@/components/site/HighlightText";
@@ -261,7 +271,7 @@ export default function AboutPage() {
             <div aria-hidden className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full" style={{ background: "var(--gradient-radial)" }} />
             <div className="relative grid lg:grid-cols-12 gap-8">
               <Reveal className="lg:col-span-5">
-                <div className="text-xs uppercase tracking-[0.22em] text-primary">Why NEXI-US</div>
+                <div className="text-xs uppercase tracking-[0.22em] text-primary">{t("about.whyKicker")}</div>
                 <h2 className="mt-3 text-[clamp(2rem,4vw,3.2rem)] font-display font-semibold tracking-tight leading-tight">
                   <HighlightText text={t("about.whyTitle")} />
                 </h2>
@@ -299,23 +309,23 @@ export default function AboutPage() {
           </Reveal>
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
+              {
+                nameKey: "about.team.3.name", roleKey: "about.team.3.role", bioKey: "about.team.3.bio", photo: teamPhoto3, color: "oklch(0.72 0.14 155)",
+                socials: [
+                  { label: "Facebook", href: "https://www.facebook.com/nexi.hub", icon: "facebook" },
+                  { label: "Instagram", href: "https://www.instagram.com/nexi.hub", icon: "instagram" },
+                ],
+              },
               { nameKey: "about.team.1.name", roleKey: "about.team.1.role", bioKey: "about.team.1.bio", photo: teamPhoto1, color: "oklch(0.78 0.13 195)",
                 socials: [
-                  { label: "LinkedIn", href: "https://www.linkedin.com/in/abdulghafoor-sahel", icon: "linkedin" },
+                  { label: "Facebook", href: "https://www.facebook.com/nexi.hub", icon: "facebook" },
                   { label: "Instagram", href: "https://www.instagram.com/nexi.hub", icon: "instagram" },
                 ],
               },
               {
                 nameKey: "about.team.2.name", roleKey: "about.team.2.role", bioKey: "about.team.2.bio", photo: teamPhoto2, color: "oklch(0.68 0.16 260)",
                 socials: [
-                  { label: "LinkedIn", href: "https://www.linkedin.com/company/nexi-us", icon: "linkedin" },
-                  { label: "X", href: "https://x.com/nexius_digital", icon: "x" },
-                ],
-              },
-              {
-                nameKey: "about.team.3.name", roleKey: "about.team.3.role", bioKey: "about.team.3.bio", photo: teamPhoto3, color: "oklch(0.72 0.14 155)",
-                socials: [
-                  { label: "LinkedIn", href: "https://www.linkedin.com/company/nexi-us", icon: "linkedin" },
+                  { label: "Facebook", href: "https://www.facebook.com/nexi.hub", icon: "facebook" },
                   { label: "Instagram", href: "https://www.instagram.com/nexi.hub", icon: "instagram" },
                 ],
               },
@@ -350,6 +360,11 @@ export default function AboutPage() {
                         aria-label={label}
                         className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-foreground/[0.05] text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors duration-200"
                       >
+                        {icon === "facebook" && (
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+                            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+                          </svg>
+                        )}
                         {icon === "linkedin" && (
                           <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -369,6 +384,43 @@ export default function AboutPage() {
                     ))}
                   </div>
                 </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Other Services */}
+      <section className="relative py-14 md:py-20 overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute -top-20 right-1/3 h-[300px] w-[500px] rounded-full opacity-30" style={{ background: "radial-gradient(ellipse, oklch(0.78 0.13 195 / 0.12), transparent 65%)" }} />
+        <div className="container-x">
+          <Reveal>
+            <div className="text-xs uppercase tracking-[0.22em] text-primary">{t("about.otherServices.kicker" as any)}</div>
+            <h2 className="mt-3 max-w-2xl text-[clamp(2rem,4vw,3.2rem)] font-display font-semibold tracking-tight leading-tight">
+              <HighlightText text={t("about.otherServices.title" as any)} />
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-xl">{t("about.otherServices.sub" as any)}</p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {([
+              { Icon: FileText,      labelKey: "services.other.tax" },
+              { Icon: Stamp,         labelKey: "services.other.notary" },
+              { Icon: ClipboardList, labelKey: "services.other.docs" },
+              { Icon: Globe,         labelKey: "services.other.immigration" },
+              { Icon: HeartHandshake,labelKey: "services.other.social" },
+              { Icon: Home,          labelKey: "services.other.housing" },
+              { Icon: Briefcase,     labelKey: "services.other.jobs" },
+              { Icon: Wifi,          labelKey: "services.other.utility" },
+              { Icon: Settings,      labelKey: "services.other.admin" },
+              { Icon: Car,           labelKey: "services.other.dmv" },
+            ] as const).map(({ Icon, labelKey }, i) => (
+              <Reveal key={labelKey} delay={i * 0.05}>
+                <div className="elevated-card rounded-2xl p-5 flex flex-col items-center text-center gap-3 hover:border-primary/30 transition-colors">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="w-5 h-5" />
+                  </span>
+                  <span className="text-sm font-medium leading-snug">{t(labelKey as any)}</span>
+                </div>
               </Reveal>
             ))}
           </div>

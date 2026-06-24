@@ -1,22 +1,43 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PageHero } from "@/components/site/PageHero";
-import { Check, ArrowLeft, ArrowRight, Search, Megaphone, BarChart3, Code2 } from "lucide-react";
+import {
+  Check, ArrowLeft, ArrowRight, Loader2,
+  Search, Megaphone, BarChart3, Code2,
+  FileText, Stamp, ClipboardList, Globe, HeartHandshake,
+  Home, Briefcase, Wifi, Settings, Car,
+} from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { supabase } from "@/integrations/supabase/client";
 
 const BUDGETS = ["< $5k", "$5k – $15k", "$15k – $50k", "$50k – $150k", "$150k+"];
 
 export default function GetAQuotePage() {
   const { t } = useI18n();
-  const SERVICES = [
-    { id: "seo", label: t("services.seo"), Icon: Search },
-    { id: "smm", label: t("services.smm"), Icon: Megaphone },
-    { id: "ads", label: t("services.ads"), Icon: BarChart3 },
+  const MAIN_SERVICES = [
+    { id: "seo",  label: t("services.seo"),  Icon: Search },
+    { id: "smm",  label: t("services.smm"),  Icon: Megaphone },
+    { id: "ads",  label: t("services.ads"),  Icon: BarChart3 },
     { id: "soft", label: t("services.soft"), Icon: Code2 },
   ];
+  const OTHER_SERVICES = [
+    { id: "tax",         label: t("services.other.tax" as any),         Icon: FileText },
+    { id: "notary",      label: t("services.other.notary" as any),      Icon: Stamp },
+    { id: "docs",        label: t("services.other.docs" as any),        Icon: ClipboardList },
+    { id: "immigration", label: t("services.other.immigration" as any), Icon: Globe },
+    { id: "social",      label: t("services.other.social" as any),      Icon: HeartHandshake },
+    { id: "housing",     label: t("services.other.housing" as any),     Icon: Home },
+    { id: "jobs",        label: t("services.other.jobs" as any),        Icon: Briefcase },
+    { id: "utility",     label: t("services.other.utility" as any),     Icon: Wifi },
+    { id: "admin",       label: t("services.other.admin" as any),       Icon: Settings },
+    { id: "dmv",         label: t("services.other.dmv" as any),         Icon: Car },
+  ];
+  const ALL_SERVICES = [...MAIN_SERVICES, ...OTHER_SERVICES];
 
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [data, setData] = useState({
     service: "",
     company: "", website: "", name: "", email: "",
@@ -30,6 +51,25 @@ export default function GetAQuotePage() {
   const steps = [t("quote.step.service"), t("quote.step.business"), t("quote.step.budget"), t("quote.step.summary")];
   const next = () => setStep((s) => Math.min(s + 1, 3));
   const prev = () => setStep((s) => Math.max(s - 1, 0));
+
+  const submit = async () => {
+    setSubmitting(true);
+    setSubmitError(null);
+    const { error } = await supabase.from("quotes").insert({
+      name: data.name,
+      email: data.email,
+      company: data.company || null,
+      website: data.website || null,
+      service: data.service,
+      budget: data.budget,
+      timeline: data.timeline,
+      notes: data.notes || null,
+      status: "new",
+    });
+    setSubmitting(false);
+    if (error) { setSubmitError(error.message); return; }
+    setDone(true);
+  };
 
   const canNext =
     (step === 0 && data.service) ||
@@ -81,16 +121,35 @@ export default function GetAQuotePage() {
                     <div>
                       <h3 className="text-xl font-display font-semibold mb-1">{t("quote.q1.title")}</h3>
                       <p className="text-sm text-muted-foreground mb-6">{t("quote.q1.sub")}</p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {SERVICES.map(({ id, label, Icon }) => (
-                          <button key={id} type="button" onClick={() => setData({ ...data, service: id })}
-                            className={`flex items-center gap-4 rounded-2xl border p-4 text-left transition ${
-                              data.service === id ? "border-primary bg-primary/10" : "border-foreground/10 hover:border-primary/40"
-                            }`}>
-                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon className="w-4 h-4" /></span>
-                            <span className="text-sm font-medium">{label}</span>
-                          </button>
-                        ))}
+                      <div className="space-y-6">
+                        <div>
+                          <div className="text-[10px] uppercase tracking-[0.2em] text-primary mb-3">{t("services.kicker")}</div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {MAIN_SERVICES.map(({ id, label, Icon }) => (
+                              <button key={id} type="button" onClick={() => setData({ ...data, service: id })}
+                                className={`flex items-center gap-4 rounded-2xl border p-4 text-left transition ${
+                                  data.service === id ? "border-primary bg-primary/10" : "border-foreground/10 hover:border-primary/40"
+                                }`}>
+                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon className="w-4 h-4" /></span>
+                                <span className="text-sm font-medium">{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-[0.2em] text-primary mb-3">{t("services.other.label" as any)}</div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {OTHER_SERVICES.map(({ id, label, Icon }) => (
+                              <button key={id} type="button" onClick={() => setData({ ...data, service: id })}
+                                className={`flex items-center gap-4 rounded-2xl border p-4 text-left transition ${
+                                  data.service === id ? "border-primary bg-primary/10" : "border-foreground/10 hover:border-primary/40"
+                                }`}>
+                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon className="w-4 h-4" /></span>
+                                <span className="text-sm font-medium">{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -133,7 +192,7 @@ export default function GetAQuotePage() {
                     <div>
                       <h3 className="text-xl font-display font-semibold mb-6">{t("quote.q4.title")}</h3>
                       <dl className="grid md:grid-cols-2 gap-y-4 gap-x-8 text-sm">
-                        <Row k={t("quote.step.service")} v={SERVICES.find((s) => s.id === data.service)?.label || "-"} />
+                        <Row k={t("quote.step.service")} v={ALL_SERVICES.find((s) => s.id === data.service)?.label || "-"} />
                         <Row k={t("quote.step.budget")} v={data.budget || "-"} />
                         <Row k={t("quote.q2.companyField")} v={data.company} />
                         <Row k={t("quote.q2.website")} v={data.website || "-"} />
@@ -147,18 +206,24 @@ export default function GetAQuotePage() {
               )}
             </AnimatePresence>
 
+            {submitError && (
+              <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-200">
+                {submitError}
+              </div>
+            )}
+
             {!done && (
               <div className="mt-8 flex items-center justify-between border-t border-foreground/5 pt-6">
-                <button onClick={prev} disabled={step === 0} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground disabled:opacity-30">
+                <button onClick={prev} disabled={step === 0 || submitting} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground disabled:opacity-30">
                   <ArrowLeft className="w-4 h-4" /> {t("quote.back")}
                 </button>
                 {step < 3 ? (
-                  <button onClick={next} disabled={!canNext} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium disabled:opacity-40">
+                  <button onClick={next} disabled={!canNext || submitting} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium disabled:opacity-40">
                     {t("quote.continue")} <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
-                  <button onClick={() => setDone(true)} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium">
-                    {t("quote.submit")} <Check className="w-4 h-4" />
+                  <button onClick={submit} disabled={submitting} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium disabled:opacity-40">
+                    {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <>{t("quote.submit")} <Check className="w-4 h-4" /></>}
                   </button>
                 )}
               </div>

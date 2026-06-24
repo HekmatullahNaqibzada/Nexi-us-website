@@ -9,7 +9,7 @@ const SLOTS = ["09:00", "09:30", "10:00", "11:00", "13:00", "14:30", "15:30", "1
 
 export default function BookAppointmentPage() {
   const { t } = useI18n();
-  const SERVICES = [t("services.seo"), t("services.smm"), t("services.ads"), t("services.soft")];
+  const SERVICES = [t("services.seo"), t("services.smm"), t("services.ads"), t("services.soft"), t("book.serviceOther")];
   const today = new Date();
 
   const [month, setMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));

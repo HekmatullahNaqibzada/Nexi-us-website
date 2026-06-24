@@ -10,6 +10,7 @@ import { Counter } from "@/components/site/Counter";
 import { HeroVisual } from "@/components/site/HeroVisual";
 import { HeroSlider } from "@/components/site/HeroSlider";
 import { Partners } from "@/components/site/Partners";
+import { Clients } from "@/components/site/Clients";
 import { AmbientCanvas } from "@/components/site/AmbientCanvas";
 import { PlexusCanvas } from "@/components/site/PlexusCanvas";
 
@@ -167,6 +168,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* PARTNERS */}
+      <Partners />
+
       {/* WHY NEXI / TIMELINE */}
       <section className="relative py-14 md:py-20 overflow-hidden section-accent">
         <PlexusCanvas className="opacity-[0.28]" density={1.1} />
@@ -204,30 +208,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PARTNERS */}
-      <Partners />
-
-      {/* VISIT CTA BANNER */}
-      <section className="relative py-10 md:py-14 overflow-hidden">
-        <div className="container-x">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] px-6 md:px-10 py-7 md:py-9 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-              <div aria-hidden className="pointer-events-none absolute -top-12 -right-12 h-[180px] w-[180px] rounded-full" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 195 / 0.25), transparent 70%)", filter: "blur(30px)" }} />
-              <div className="relative">
-                <div className="text-xs uppercase tracking-[0.22em] text-primary mb-2">{t("hero.eyebrow")}</div>
-                <p className="text-lg md:text-xl font-display font-semibold tracking-tight max-w-xl">
-                  Book your visit today for <span className="text-primary">personalized support</span>
-                </p>
-              </div>
-              <div className="relative shrink-0">
-                <MagneticLink to="/book-appointment" variant="primary">
-                  {t("cta.btn")} <ArrowRight className="w-4 h-4" />
-                </MagneticLink>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* CLIENTS */}
+      <Clients />
 
       {/* CTA */}
       <section className="relative py-14 md:py-20 overflow-hidden section-alt">

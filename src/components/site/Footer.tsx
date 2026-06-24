@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Instagram, ArrowUpRight, Mail, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { ArrowUpRight, Mail, CheckCircle2, AlertCircle, Loader2, Shield } from "lucide-react";
 import { Logo } from "./Logo";
 import { useI18n } from "@/lib/i18n";
 import { Reveal } from "./Reveal";
@@ -79,7 +79,7 @@ export function Footer() {
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5 flex flex-col gap-6">
-            <Logo />
+            <Logo className="h-16 md:h-20" />
             <p className="text-sm text-muted-foreground max-w-sm">
               {t("footer.newsletter")}
             </p>
@@ -133,20 +133,6 @@ export function Footer() {
               </div>
             )}
 
-            <div className="flex items-center gap-2 mt-2">
-              {[Twitter, Linkedin, Github, Instagram].map((Icon, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  whileHover={{ y: -3, rotate: -6 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 14 }}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 text-foreground/70 hover:text-primary hover:border-primary/50"
-                  aria-label="social"
-                >
-                  <Icon className="w-4 h-4" />
-                </motion.a>
-              ))}
-            </div>
           </div>
 
           {cols.map((col) => (
@@ -191,7 +177,9 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 py-6 text-xs text-muted-foreground">
           <div><bdi>© {year} NEXI-US Digital Hub.</bdi> {t("footer.rights")}</div>
           <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> {t("footer.status")}</span>
+            <Link to="/privacy-policy" className="inline-flex items-center gap-1.5 hover:text-primary transition-colors">
+              <Shield className="h-3.5 w-3.5" /> {t("footer.privacy")}
+            </Link>
           </div>
         </div>
 

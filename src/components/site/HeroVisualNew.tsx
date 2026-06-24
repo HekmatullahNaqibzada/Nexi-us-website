@@ -1,5 +1,6 @@
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
+import { motion } from "framer-motion";
 import darkLogo from "@/assets/nexi-logo-dark.png";
 import whiteLogo from "@/assets/nexi-logo-whiite.png";
 
@@ -34,9 +35,9 @@ export function HeroVisual() {
 
   // Use raw hex/rgba for SVG attributes (oklch not universally supported in SVG)
   const P  = isDark ? "rgba(14,188,189,1)"    : "rgba(5,120,121,1)";
-  const PD = isDark ? "rgba(14,188,189,0.4)"  : "rgba(5,120,121,0.5)";
-  const PF = isDark ? "rgba(14,188,189,0.14)" : "rgba(5,120,121,0.18)";
-  const GL = isDark ? "rgba(14,188,189,0.22)" : "rgba(5,120,121,0.16)";
+  const PD = isDark ? "rgba(14,188,189,0.65)" : "rgba(5,120,121,0.70)";
+  const PF = isDark ? "rgba(14,188,189,0.32)" : "rgba(5,120,121,0.36)";
+  const GL = isDark ? "rgba(14,188,189,0.38)" : "rgba(5,120,121,0.28)";
 
   return (
     <div className="relative flex justify-center items-center select-none">
@@ -46,9 +47,9 @@ export function HeroVisual() {
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{
           background: isDark
-            ? "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(14,188,189,0.12) 0%, transparent 70%)"
-            : "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(5,120,121,0.08) 0%, transparent 70%)",
-          filter: "blur(32px)",
+            ? "radial-gradient(ellipse 90% 90% at 50% 50%, rgba(14,188,189,0.28) 0%, rgba(14,188,189,0.10) 45%, transparent 70%)"
+            : "radial-gradient(ellipse 90% 90% at 50% 50%, rgba(5,120,121,0.20) 0%, rgba(5,120,121,0.07) 45%, transparent 70%)",
+          filter: "blur(40px)",
         }}
       />
 
@@ -64,41 +65,55 @@ export function HeroVisual() {
         >
           <defs>
             <radialGradient id="logoHubGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stopColor={isDark ? "rgba(14,188,189,0.35)" : "rgba(5,120,121,0.3)"} />
+              <stop offset="0%"   stopColor={isDark ? "rgba(14,188,189,0.55)" : "rgba(5,120,121,0.45)"} />
               <stop offset="100%" stopColor="rgba(0,0,0,0)" />
             </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <filter id="ringGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
               <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <filter id="hubShadow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="22" result="blur" />
+              <feFlood floodColor={isDark ? "rgba(14,188,189,0.7)" : "rgba(5,120,121,0.55)"} result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="glow" />
+              <feMerge><feMergeNode in="glow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
           </defs>
 
           {/* ── Outer ring — very slow CW ── */}
           <circle
             cx="250" cy="250" r="220"
-            stroke={PF} strokeWidth="0.6" strokeDasharray="2 18"
+            stroke={PF} strokeWidth="1.2" strokeDasharray="2 18"
             style={{ animation: "spin 90s linear infinite", transformOrigin: "250px 250px" }}
           />
 
           {/* ── Mid ring — slower CCW ── */}
           <circle
             cx="250" cy="250" r="168"
-            stroke={PD} strokeWidth="0.7" strokeDasharray="1 12"
+            stroke={PD} strokeWidth="1.4" strokeDasharray="1 12"
+            filter="url(#ringGlow)"
             style={{ animation: "spin 55s linear infinite reverse", transformOrigin: "250px 250px" }}
           />
 
           {/* ── Inner ring — CW ── */}
           <circle
             cx="250" cy="250" r="112"
-            stroke={PD} strokeWidth="0.8" strokeDasharray="4 24"
+            stroke={PD} strokeWidth="1.6" strokeDasharray="4 24"
+            filter="url(#ringGlow)"
             style={{ animation: "spin 35s linear infinite", transformOrigin: "250px 250px" }}
           />
 
           {/* ── Pulsing hub glow ── */}
-          <circle cx="250" cy="250" r="80" fill="url(#logoHubGrad)" className="animate-pulse" />
+          <circle cx="250" cy="250" r="84" fill="url(#logoHubGrad)" className="animate-pulse" />
 
+          {/* ── Hub shadow ── */}
+          <circle cx="250" cy="250" r="90" fill={isDark ? "rgba(14,188,189,0.30)" : "rgba(5,120,121,0.22)"} filter="url(#hubShadow)" />
           {/* ── Hub border ── */}
-          <circle cx="250" cy="250" r="78" stroke={PD} strokeWidth="1" />
+          <circle cx="250" cy="250" r="82" stroke={P} strokeWidth="2" opacity="0.85" filter="url(#ringGlow)" />
 
           {/* ── Particle network lines ── */}
           {LINES.map(([a, b], i) => {
@@ -158,12 +173,30 @@ export function HeroVisual() {
 
         {/* ── Logo centered over SVG ── */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="relative flex items-center justify-center">
+          {/* Soft radial glow behind the logo circle */}
+          <div
+            className="absolute w-40 h-40 md:w-48 md:h-48 rounded-full"
+            style={{ background: "radial-gradient(circle, oklch(0.78 0.13 195 / 0.25) 0%, transparent 70%)", filter: "blur(24px)" }}
+          />
+          {/* Animated highlight ring */}
+          <motion.div
+            className="absolute w-40 h-40 md:w-48 md:h-48 rounded-full border-2 border-primary/30"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div
+            className="relative flex items-center justify-center w-40 h-40 md:w-48 md:h-48 rounded-full elevated-card"
+            style={{
+              boxShadow: isDark
+                ? "0 0 0 8px rgba(14,188,189,0.12), 0 0 80px -5px rgba(14,188,189,0.7), 0 24px 60px -16px rgba(0,0,0,0.5)"
+                : "0 0 0 8px rgba(5,120,121,0.10), 0 0 80px -5px rgba(5,120,121,0.55), 0 24px 60px -16px rgba(0,0,0,0.25)",
+            }}
+          >
             <img
               src={logoSrc}
               alt="NEXI-US"
               draggable={false}
-              className="relative z-10 h-20 md:h-24 w-auto object-contain drop-shadow-lg"
+              className="relative z-10 h-20 md:h-24 w-auto object-contain"
             />
           </div>
         </div>

@@ -71,7 +71,7 @@ export function HeroSlider() {
       </motion.div>
 
       {/* Slide content */}
-      <div className="relative mt-6 md:mt-8 min-h-[280px] md:min-h-[320px]">
+      <div className="relative mt-6 md:mt-8 min-h-[340px] md:min-h-[380px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -121,8 +121,15 @@ export function HeroSlider() {
         </AnimatePresence>
       </div>
 
-      {/* Controls */}
-      <div className="mt-8 md:mt-12 flex items-center justify-between gap-4">
+      {/* Controls — always LTR so arrows never flip confusingly */}
+      <div className="mt-8 md:mt-12 flex items-center gap-4" dir="ltr">
+        <button
+          onClick={prev}
+          aria-label="Previous slide"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 hover:bg-foreground/5 hover:border-primary/40 transition"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
         <div className="flex items-center gap-2">
           {slides.map((_, i) => (
             <button
@@ -135,22 +142,13 @@ export function HeroSlider() {
             />
           ))}
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={prev}
-            aria-label="Previous slide"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 hover:bg-foreground/5 transition"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={next}
-            aria-label="Next slide"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 hover:bg-foreground/5 transition"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+        <button
+          onClick={next}
+          aria-label="Next slide"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/10 hover:bg-foreground/5 hover:border-primary/40 transition"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );

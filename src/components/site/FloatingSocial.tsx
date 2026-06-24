@@ -15,44 +15,19 @@ type SocialLink = {
   label: string;
   href: string;
   icon: ComponentType<{ className?: string }>;
-  color: string;
-  glow: string;
-  bg: string;
+};
+
+const BRAND = {
+  color: "#0ebcbd",
+  glow: "rgba(14,188,189,0.45)",
+  shadow: "rgba(14,188,189,0.5)",
 };
 
 const LINKS: SocialLink[] = [
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/nexi.hub",
-    icon: Facebook,
-    color: "#1877F2",
-    glow: "rgba(24,119,242,0.35)",
-    bg: "rgba(24,119,242,0.10)",
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/nexi.hub",
-    icon: Instagram,
-    color: "#E1306C",
-    glow: "rgba(225,48,108,0.35)",
-    bg: "rgba(225,48,108,0.10)",
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@Nexi.Digital",
-    icon: Youtube,
-    color: "#FF0000",
-    glow: "rgba(255,0,0,0.30)",
-    bg: "rgba(255,0,0,0.08)",
-  },
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@nexi.digital",
-    icon: TikTokIcon,
-    color: "#010101",
-    glow: "rgba(105,201,208,0.35)",
-    bg: "rgba(105,201,208,0.10)",
-  },
+  { label: "Facebook", href: "https://www.facebook.com/nexi.hub", icon: Facebook },
+  { label: "Instagram", href: "https://www.instagram.com/nexi.hub", icon: Instagram },
+  { label: "YouTube", href: "https://www.youtube.com/@Nexi.Digital", icon: Youtube },
+  { label: "TikTok", href: "https://www.tiktok.com/@nexi.digital", icon: TikTokIcon },
 ];
 
 export function FloatingSocial() {
@@ -73,7 +48,7 @@ export function FloatingSocial() {
       {/* Vertical divider line above */}
       <div className="w-px h-6 hidden md:block" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.78 0.13 195 / 0.4))" }} />
 
-      {LINKS.map(({ label, href, icon: Icon, color, glow, bg }, i) => (
+      {LINKS.map(({ label, href, icon: Icon }, i) => (
         <motion.a
           key={label}
           href={href}
@@ -92,18 +67,16 @@ export function FloatingSocial() {
             className={`pointer-events-none absolute whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold text-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
               isRtl ? "left-12" : "right-12"
             }`}
-            style={{ background: color }}
+            style={{ background: BRAND.color }}
           >
             {label}
           </span>
           {/* Icon button */}
           <span
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-md shadow-md transition-all duration-300 group-hover:shadow-lg"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-black shadow-md transition-all duration-300 group-hover:shadow-lg"
             style={{
-              background: bg,
-              border: `1.5px solid ${color}40`,
-              color: color,
-              boxShadow: `0 2px 12px ${glow}`,
+              background: BRAND.color,
+              boxShadow: `0 2px 12px ${BRAND.shadow}`,
             }}
           >
             <Icon className="w-4 h-4" />
@@ -111,7 +84,7 @@ export function FloatingSocial() {
           {/* Hover glow ring */}
           <span
             className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            style={{ boxShadow: `0 0 16px 4px ${glow}` }}
+            style={{ boxShadow: `0 0 16px 4px ${BRAND.glow}` }}
           />
         </motion.a>
       ))}

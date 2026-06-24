@@ -15,23 +15,12 @@ const NAV = [
   { to: "/contact", key: "nav.contact" as const },
 ];
 
-const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "en", label: "English", flag: "us" },
-  { code: "fa", label: "دری",     flag: "af" },
-  { code: "ps", label: "پښتو",   flag: "af" },
+const LANGS: { code: Lang; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "fa", label: "فارسی" },
+  { code: "ps", label: "پښتو" },
 ];
 
-function FlagImg({ code, className = "" }: { code: string; className?: string }) {
-  return (
-    <img
-      src={`https://flagcdn.com/w20/${code}.png`}
-      srcSet={`https://flagcdn.com/w40/${code}.png 2x`}
-      alt={code.toUpperCase()}
-      className={`rounded-[2px] object-cover ${className}`}
-      style={{ width: 18, height: 13 }}
-    />
-  );
-}
 
 export function Header() {
   const { t, lang, setLang } = useI18n();
@@ -114,8 +103,7 @@ export function Header() {
                 className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-foreground/10 px-3 py-1.5 text-xs text-foreground/80 hover:bg-foreground/5 transition-colors"
                 aria-label="Language"
               >
-                <FlagImg code={LANGS.find(l => l.code === lang)?.flag ?? "us"} />
-                {lang.toUpperCase()}
+                {LANGS.find(l => l.code === lang)?.label ?? lang.toUpperCase()}
               </button>
               <AnimatePresence>
                 {langOpen && (
@@ -133,7 +121,6 @@ export function Header() {
                           lang === l.code ? "text-primary" : ""
                         }`}
                       >
-                        <FlagImg code={l.flag} />
                         <span className="flex-1">{l.label}</span>
                         <span className="text-[10px] opacity-60">{l.code.toUpperCase()}</span>
                       </button>
@@ -168,25 +155,59 @@ export function Header() {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="hidden lg:block absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[640px] rounded-3xl glass p-6 shadow-2xl"
+              className="hidden lg:block absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[860px] rounded-3xl glass p-6 shadow-2xl"
             >
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { k: "services.seo",  d: "services.seoDesc",  hash: "seo"  },
-                  { k: "services.smm",  d: "services.smmDesc",  hash: "smm"  },
-                  { k: "services.ads",  d: "services.adsDesc",  hash: "ads"  },
-                  { k: "services.soft", d: "services.softDesc", hash: "soft" },
-                ].map((s) => (
-                  <Link
-                    key={s.k}
-                    to={`/services#${s.hash}`}
-                    onClick={(e) => { handleServiceClick(e, s.hash); setMega(false); }}
-                    className="group rounded-2xl p-4 hover:bg-foreground/[0.04] border border-transparent hover:border-foreground/10 transition"
-                  >
-                    <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t(s.k)}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{t(s.d)}</div>
-                  </Link>
-                ))}
+              <div className="grid grid-cols-2 gap-6">
+                {/* Main services */}
+                <div>
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3 px-1">{t("nav.services")}</div>
+                  <div className="grid grid-cols-1 gap-2">
+                    {[
+                      { k: "services.seo",  d: "services.seoDesc",  hash: "seo"  },
+                      { k: "services.smm",  d: "services.smmDesc",  hash: "smm"  },
+                      { k: "services.ads",  d: "services.adsDesc",  hash: "ads"  },
+                      { k: "services.soft", d: "services.softDesc", hash: "soft" },
+                      { k: "services.it",   d: "services.itDesc",   hash: "it"   },
+                    ].map((s) => (
+                      <Link
+                        key={s.k}
+                        to={`/services#${s.hash}`}
+                        onClick={(e) => { handleServiceClick(e, s.hash); setMega(false); }}
+                        className="group rounded-2xl p-3.5 hover:bg-foreground/[0.04] border border-transparent hover:border-foreground/10 transition"
+                      >
+                        <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t(s.k)}</div>
+                        <div className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{t(s.d)}</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                {/* Other services */}
+                <div>
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3 px-1">{t("services.other.label")}</div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {[
+                      { k: "services.other.tax",         d: "services.other.taxDesc"         },
+                      { k: "services.other.notary",      d: "services.other.notaryDesc"      },
+                      { k: "services.other.docs",        d: "services.other.docsDesc"        },
+                      { k: "services.other.immigration", d: "services.other.immigrationDesc" },
+                      { k: "services.other.social",      d: "services.other.socialDesc"      },
+                      { k: "services.other.housing",     d: "services.other.housingDesc"     },
+                      { k: "services.other.jobs",        d: "services.other.jobsDesc"        },
+                      { k: "services.other.utility",     d: "services.other.utilityDesc"     },
+                      { k: "services.other.admin",       d: "services.other.adminDesc"       },
+                      { k: "services.other.dmv",         d: "services.other.dmvDesc"         },
+                    ].map((s) => (
+                      <Link
+                        key={s.k}
+                        to="/services"
+                        onClick={() => setMega(false)}
+                        className="group rounded-xl p-2.5 hover:bg-foreground/[0.04] border border-transparent hover:border-foreground/10 transition"
+                      >
+                        <div className="text-xs font-semibold group-hover:text-primary transition-colors leading-snug">{t(s.k as any)}</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
@@ -259,11 +280,13 @@ export function Header() {
                               className="overflow-hidden"
                             >
                               <div className="mx-2 mb-2 rounded-2xl border border-foreground/8 bg-foreground/[0.02] p-2 flex flex-col gap-1">
+                                <div className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground px-3 pt-1 pb-0.5">{t("nav.services")}</div>
                                 {[
                                   { k: "services.seo",  d: "services.seoDesc",  hash: "seo"  },
                                   { k: "services.smm",  d: "services.smmDesc",  hash: "smm"  },
                                   { k: "services.ads",  d: "services.adsDesc",  hash: "ads"  },
                                   { k: "services.soft", d: "services.softDesc", hash: "soft" },
+                                  { k: "services.it",   d: "services.itDesc",   hash: "it"   },
                                 ].map((s) => (
                                   <Link
                                     key={s.k}
@@ -279,6 +302,29 @@ export function Header() {
                                       <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t(s.k as any)}</div>
                                       <div className="text-xs text-muted-foreground mt-0.5">{t(s.d as any)}</div>
                                     </div>
+                                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 text-primary transition shrink-0 ml-2" />
+                                  </Link>
+                                ))}
+                                <div className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground px-3 pt-2 pb-0.5">{t("services.other.label")}</div>
+                                {[
+                                  { k: "services.other.tax",         hash: "" },
+                                  { k: "services.other.notary",      hash: "" },
+                                  { k: "services.other.docs",        hash: "" },
+                                  { k: "services.other.immigration", hash: "" },
+                                  { k: "services.other.social",      hash: "" },
+                                  { k: "services.other.housing",     hash: "" },
+                                  { k: "services.other.jobs",        hash: "" },
+                                  { k: "services.other.utility",     hash: "" },
+                                  { k: "services.other.admin",       hash: "" },
+                                  { k: "services.other.dmv",         hash: "" },
+                                ].map((s) => (
+                                  <Link
+                                    key={s.k}
+                                    to="/services"
+                                    onClick={() => { setMobileServicesOpen(false); setOpen(false); }}
+                                    className="group flex items-center justify-between rounded-xl px-4 py-2.5 hover:bg-primary/[0.07] transition"
+                                  >
+                                    <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t(s.k as any)}</div>
                                     <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 text-primary transition shrink-0 ml-2" />
                                   </Link>
                                 ))}
@@ -311,7 +357,7 @@ export function Header() {
                         lang === l.code ? "border-primary bg-primary/10 text-primary" : "border-foreground/10 text-foreground/70 hover:border-foreground/20"
                       }`}
                     >
-                      <FlagImg code={l.flag} /> {l.label}
+                      {l.label}
                     </button>
                   ))}
                 </div>
